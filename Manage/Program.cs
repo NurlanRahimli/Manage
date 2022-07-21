@@ -3,6 +3,7 @@ using Core.Constants;
 using Core.Entities;
 using Core.Helpers;
 using DataAccess.Repositories.Implementations;
+using Manage.Controllers;
 
 namespace Manage
 {
@@ -10,7 +11,7 @@ namespace Manage
     {
         static void Main(string[] args)
         {
-            GroupRepository _groupRepository = new GroupRepository();
+            GroupController _groupController = new GroupController();
             ConsoleHelper.WriteTextWithColor(ConsoleColor.Green, "Welcome");
             Console.WriteLine("-----");
 
@@ -36,38 +37,23 @@ namespace Manage
                         switch (selectedNumber)
                         {
                             case (int)Options.CreateGroup:
-                                ConsoleHelper.WriteTextWithColor(ConsoleColor.Magenta, "Enter group name");
-                                string name = Console.ReadLine();
-                                MaxSize:  ConsoleHelper.WriteTextWithColor(ConsoleColor.Magenta, "Enter group max size");
-                                string size = Console.ReadLine();
-                                int maxSize;
-                                result = int.TryParse(size, out maxSize);
-                                if (result)
-                                {
-                                    Group group = new Group
-                                    {
-                                        Name = name,
-                                        MaxSize = maxSize
-                                    };
-                                    _groupRepository.Create(group);
-                                    ConsoleHelper.WriteTextWithColor(ConsoleColor.Green, $"{group.Name} is succesfully created with max size - {group.MaxSize}");
-                                }
-                                else
-                                {
-                                    ConsoleHelper.WriteTextWithColor(ConsoleColor.Red, "Please, enter correct group maxsize");
-                                    goto MaxSize;
-                                }
+                                _groupController.CreateGroup();
                                 break;
                             case (int)Options.UpdateGroup:
+                                _groupController.UpdateGroup();
                                 break;
                             case (int)Options.DeleteGroup:
+                                _groupController.DeleteGroup();
                                 break;
                             case (int)Options.AllGroups:
+                                
                                 break;
                             case (int)Options.GetGroupByName:
+                                _groupController.GetGroupByName();
                                 break;
                             case (int)Options.Exit:
-                                break;
+                                _groupController.Exit();
+                                return;
                         }
                     }
                     else

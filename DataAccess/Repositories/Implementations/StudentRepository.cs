@@ -35,7 +35,7 @@ namespace DataAccess.Repositories.Implementations
             }
             else
             {
-                return DbContext.Students.Find(filter);
+                return DbContext.Students.Find((Predicate<Student>)filter);
             }
         }
 
